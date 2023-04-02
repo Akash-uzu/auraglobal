@@ -1,0 +1,46 @@
+.table-container{
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    
+}
+button{
+    margin: 7px;
+    height: 50px;
+    width: 90px;
+    border-radius: 8px;
+    border: none;
+    font-size: 15px;
+    font-weight: bold;
+    color: rgba(0, 0, 0, 0.664);
+}
+button:hover{
+    cursor: pointer;
+    background-color: #d0c5da;
+}
+table{
+    margin: 10px;
+}
+table thead{
+    background-color: rgb(156, 124, 187);
+    height: 20px;
+}
+tr{
+    height: 50px;
+    width: 30px;
+}
+th{
+    padding: 20px;
+}
+td{
+    background-color: rgb(224, 213, 236);
+    text-align: center;
+    padding: 5px;
+}
+
+input{
+    height: 30px;
+    border-radius: 8px;
+    border: 1px solid gray;
+}
