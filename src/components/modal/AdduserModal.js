@@ -5,7 +5,7 @@ import { addUser } from '../../redux/adduser/addUserSlice';
 import "./AdduserModal.css"
 
 
-const AddUserModal = ({setOpenModal,triggetTable,setTriggerTable}) => {
+const AddUserModal = ({setOpenModal}) => {
 
 
 
@@ -14,7 +14,7 @@ const AddUserModal = ({setOpenModal,triggetTable,setTriggerTable}) => {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [mobile, setMobile] = useState('');
-  const [json, setJson] = useState('');
+  const [json, setJson] = useState("");
   const [errors, setErrors] = useState({});
   const dispatch= useDispatch()
   const handleSubmit = (event) => {
@@ -43,12 +43,15 @@ const AddUserModal = ({setOpenModal,triggetTable,setTriggerTable}) => {
     } else if (!/^[0-9]+$/.test(mobile)) {
       errors.mobile = 'Mobile must contain only digits';
     }
-    if (json) {
+    if (json.length>0) {
       try {
         JSON.parse(json);
+        console.log(json)
       } catch (error) {
         errors.json = 'JSON is invalid';
       }
+    }else{
+      errors.json = "JSON should not be Empty"
     }
   
     if (Object.keys(errors).length > 0) {
@@ -65,7 +68,7 @@ const AddUserModal = ({setOpenModal,triggetTable,setTriggerTable}) => {
     };
     dispatch(addUser(newUser));
   
-    setTriggerTable(!triggetTable);
+    // setTriggerTable(!triggetTable);
     setOpenModal(false);
   };
   

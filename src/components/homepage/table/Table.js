@@ -20,7 +20,7 @@ const Table = () => {
   const [filteredData, setFilteredData] = useState([]);
   const [showIndex, setIndex] = useState(0);
 
-  const [triggetTable, setTriggerTable] = useState(false);
+  // const [triggetTable, setTriggerTable] = useState(false);
 
   const users = useSelector((state) => state.addUser.users);
   // const users = useSelector(userState)
@@ -108,8 +108,8 @@ const Table = () => {
         <Box sx={style}>
           <AddUserModal
             setOpenModal={setOpenModal}
-            setTriggerTable={setTriggerTable}
-            triggetTable={triggetTable}
+            // setTriggerTable={setTriggerTable}
+            // triggetTable={triggetTable}
           />
         </Box>
       </Modal>
