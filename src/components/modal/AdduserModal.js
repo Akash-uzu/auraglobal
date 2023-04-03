@@ -1,25 +1,23 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { addUser } from '../../redux/adduser/addUserSlice';
+import { addUser,updateUser } from '../../redux/adduser/addUserSlice';
 
 import "./AdduserModal.css"
 
 
-const AddUserModal = ({setOpenModal}) => {
+const AddUserModal = ({setOpenModal, filteredData}) => {
 
 
-
-  const [username, setUsername] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
-  const [mobile, setMobile] = useState('');
-  const [json, setJson] = useState("");
+  const [username, setUsername] = useState(filteredData ?filteredData.username : '');
+  const [email, setEmail] = useState(filteredData ?filteredData.email : '');
+  const [password, setPassword] = useState(filteredData ?filteredData.password : '');
+  const [confirmPassword, setConfirmPassword] = useState(filteredData ?filteredData.password : '');
+  const [mobile, setMobile] = useState(filteredData ?filteredData.mobile : '');
+  const [json, setJson] = useState(filteredData ?filteredData.json : '');
   const [errors, setErrors] = useState({});
   const dispatch= useDispatch()
   const handleSubmit = (event) => {
     event.preventDefault();
-  
     // Validate input fields
     let errors = {};
     if (!username) {
@@ -59,68 +57,79 @@ const AddUserModal = ({setOpenModal}) => {
       return;
     }
   
-    const newUser = {
+    const user = {
+      id: filteredData ? filteredData.id : Math.floor(Math.random() * 1000000) + 1,
       username,
       email,
       password,
       mobile,
       json,
     };
-    dispatch(addUser(newUser));
+    if(!filteredData){
+      dispatch(addUser(user));
   
-    // setTriggerTable(!triggetTable);
-    setOpenModal(false);
+      // setTriggerTable(!triggetTable);
+      setOpenModal(false);
+
+    }else{
+      dispatch(updateUser(user))
+      setOpenModal(false);
+
+
+    }
+
+    
   };
   
 
 
   return(
     <div className="modal">
-      <h2>Add User</h2>
+      <h2>{filteredData ? "Update User" : "Add User"}</h2>
       <form onSubmit={handleSubmit}>
         <label>
           Username:
-          <input type="text" value={username} onChange={(event) => setUsername(event.target.value)} />
+          <input type="text" value={username} autoComplete="off" onChange={(event) => setUsername(event.target.value)} />
           {errors.username && <span className="error">{errors.username}</span>}
 
         </label>
         <br />
         <label>
           Email:
-          <input type="text" value={email} onChange={(event) => setEmail(event.target.value)} />
+          <input type="text" value={ email} autoComplete="off" onChange={(event) => setEmail(event.target.value)} />
           {errors.email && <span className="error">{errors.email}</span>}
 
         </label>
         <br />
         <label>
           Password:
-          <input type="password" value={password} onChange={(event) => setPassword(event.target.value)} />
+          <input type="password" value={ password} autoComplete="off" onChange={(event) => setPassword(event.target.value)} />
           {errors.password && <span className="error">{errors.password}</span>}
         </label>
         
         <br />
         <label>
           Confirm Password:
-          <input type="password" value={confirmPassword} onChange={(event) => setConfirmPassword(event.target.value)} />
+          <input type="password" value={ confirmPassword} autoComplete="off" onChange={(event) => setConfirmPassword(event.target.value)} />
           {errors.confirmPassword && <span className="error">{errors.confirmPassword}</span>}
 
         </label>
         <br />
         <label>
           Mobile:
-          <input type="text" value={mobile} onChange={(event) => setMobile(event.target.value)} />
+          <input type="text" value={mobile} autoComplete="off" onChange={(event) => setMobile(event.target.value)} />
           {errors.mobile && <span className="error">{errors.mobile}</span>}
 
         </label>
         <br />
         <label>
           JSON:
-          <textarea value={json} onChange={(event) => setJson(event.target.value)} />
+          <textarea value={json} autoComplete="off" onChange={(event) => setJson(event.target.value)} />
           {errors.json && <span className="error">{errors.json}</span>}
 
         </label>
         <br />
-        <button type="submit">Add User</button>
+        <button type="submit">{filteredData ? "Update" :"Add User"}</button>
       </form>
     </div>
   );

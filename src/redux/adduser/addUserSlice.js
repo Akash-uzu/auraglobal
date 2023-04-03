@@ -17,18 +17,40 @@ const addUserSlice = createSlice({
   name: 'addUsers',
   initialState,
   reducers: {
-   addUser:(state,{payload})=>{
-    state.users.push(payload)
-    localStorage.setItem('users',JSON.stringify(state.users))
-   }
+    addUser: (state, { payload }) => {
+      // Add an id to the new user
+      const newUser = { ...payload };
+      
+      // Add the new user to the users array 
+      state.users.push(newUser);
+      
+      // Update the local storage
+      localStorage.setItem('users', JSON.stringify(state.users));
+    },
+    updateUser: (state, { payload }) => {
+      state.users.forEach(item => {
+        
+        if (item.id === payload.id) {
+          item.username = payload.username;
+          item.email = payload.email;
+          item.password = payload.password;
+          item.mobile = payload.mobile;
+          item.json = payload.json;
+        }
+      });
+      
+      // Update the local storage
+      localStorage.setItem('users', JSON.stringify(state.users));
+    },
   },
-})
+});
+
 
 
 // state
 export const userState = state => state.addUsers;
 // action
-export const {addUser} = addUserSlice.actions;
+export const {addUser,updateUser} = addUserSlice.actions;
 
 // reducer
 export default addUserSlice.reducer;

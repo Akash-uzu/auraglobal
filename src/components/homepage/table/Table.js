@@ -1,4 +1,4 @@
-import React, {  useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./Table.css";
 import { useSelector } from "react-redux";
 import AddUserModal from "../../modal/AdduserModal";
@@ -10,14 +10,14 @@ const style = {
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
-  height:"fitcontent",
+  height: "fitcontent",
   bgcolor: "background.paper",
   boxShadow: 24,
   p: 4,
 };
 
 const Table = () => {
-  const [filteredData, setFilteredData] = useState([]);
+  const [filteredData, setFilteredData] = useState();
   const [showIndex, setIndex] = useState(0);
 
   // const [triggetTable, setTriggerTable] = useState(false);
@@ -27,14 +27,12 @@ const Table = () => {
 
   const [searchTerm, setSearchTerm] = useState("");
 
-
   useEffect(() => {
-    let login = localStorage.getItem("login")
-    if(!login){
-      window.location.href="/"
+    let login = localStorage.getItem("login");
+    if (!login) {
+      window.location.href = "/";
     }
-  }, [])
-  
+  }, []);
 
   const handleSearch = (event) => {
     setSearchTerm(event.target.value);
@@ -42,17 +40,17 @@ const Table = () => {
 
   const handleView = (e, listIndex) => {
     setIndex(listIndex);
-    setFilteredData(users.filter((item, index) => index === listIndex));
-    setViewModal(true);
+    let newData = (users.filter((item, index) => index === listIndex));
+    console.log(newData[0])
+    setFilteredData(newData[0])
+    setOpenModal(true);
   };
   const [openModal, setOpenModal] = useState(false);
-  const [openViewModal, setViewModal] = useState(false);
   const handleOpen = () => {
     setOpenModal(true);
   };
   const handleClose = () => {
     setOpenModal(false);
-    setViewModal(false);
   };
 
   const filteredUsers = users.filter((user) =>
@@ -94,7 +92,6 @@ const Table = () => {
                 ))}
             </tbody>
           </table>
-          
         </div>
       </div>
 
@@ -115,17 +112,25 @@ const Table = () => {
       </Modal>
 
       <Modal
-        open={openViewModal}
+        open={openModal}
         onClose={handleClose}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
+          <AddUserModal
+            setOpenModal={setOpenModal}
+            filteredData = {filteredData}
+            // setTriggerTable={setTriggerTable}
+            // triggetTable={triggetTable}
+          />
+        </Box>
+        {/* <Box sx={style}>
           {
             // console.log('dfdf',filteredData)
             Array.isArray(filteredData) &&
               filteredData.map((item, index) => (
-                <div  key={index}>
+                <div key={index}>
                   <h1>User Details</h1>
                   <p>
                     <b>SNO: </b> {showIndex + 1}
@@ -152,7 +157,7 @@ const Table = () => {
                 </div>
               ))
           }
-        </Box>
+        </Box> */}
       </Modal>
     </>
   );
