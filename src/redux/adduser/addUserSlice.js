@@ -55,6 +55,3 @@ export const {addUser,updateUser} = addUserSlice.actions;
 // reducer
 export default addUserSlice.reducer;
 
-// export const { addUser } = addUserSlice.actions
-
-// export default addUserSlice.reducer

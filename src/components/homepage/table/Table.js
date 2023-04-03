@@ -18,7 +18,6 @@ const style = {
 
 const Table = () => {
   const [filteredData, setFilteredData] = useState();
-  const [showIndex, setIndex] = useState(0);
 
   // const [triggetTable, setTriggerTable] = useState(false);
 
@@ -39,7 +38,6 @@ const Table = () => {
   };
 
   const handleView = (e, listIndex) => {
-    setIndex(listIndex);
     let newData = (users.filter((item, index) => index === listIndex));
     console.log(newData[0])
     setFilteredData(newData[0])
@@ -51,6 +49,7 @@ const Table = () => {
   };
   const handleClose = () => {
     setOpenModal(false);
+    setFilteredData('')
   };
 
   const filteredUsers = users.filter((user) =>
